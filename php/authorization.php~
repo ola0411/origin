@@ -1,0 +1,55 @@
+<?php
+$connect=mysql_connect('localhost', 'root', '') or die (mysql_error());
+mysql_select_db("ololo");
+mysql_set_charset('utf8');
+
+if (isset($_POST['enter'])) {
+$e_login=$_POST['e_login'];
+$e_password=md5($_POST['e_password']);
+
+$query = mysql_query("SELECT * FROM reg WHERE login='$e_login'");
+$user_data = mysql_fetch_array($query);
+
+if ($user_data['password']==$e_password) {
+session_start();
+$_SESSION["name"]=$e_login;
+$login=$_SESSION["name"];
+}
+else {
+echo "Логін або пароль вказано невірно";
+}
+}
+if (isset($_POST['output'])){
+unset($_SESSION["name"]);
+@session_destroy();
+}
+$login=$_SESSION["name"];
+
+if (isset($_SESSION["login"])) {
+$_SESSION["name"]=$_SESSION["login"];
+$login=$_SESSION["name"];
+}
+
+if(!isset($_SESSION["name"])){
+
+
+echo '
+
+<form method="post">
+<h3>Здійснити вхід</h3>
+<input type="text" name="e_login" placeholder="Логін" required /> <br>
+<input type="password" name="e_password" placeholder="Пароль" required /> <br>
+<input type="submit" name="enter" value="Вхід" />
+</form>';}
+else {
+
+echo 'Ви увійшли під логіном'."<a href='info_user.php'><b>$login</b></a>".'
+<br>
+<form method="post">
+<input type="submit" name="output" value="Вихід"/>';
+
+}
+?>
+<a href="register.php" target="_blank" onclick="window.open(this.href,this.target,'width=250,height=225,scrollbars=1');return false;">Реєстрація</a>
+
+

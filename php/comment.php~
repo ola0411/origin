@@ -1,0 +1,58 @@
+<?php
+$connect=mysql_connect('localhost', 'root', '') or die (mysql_error());
+
+mysql_select_db("ololo");
+mysql_set_charset('utf8');
+
+$log=$_SESSION["name"];
+
+
+
+if (isset($_POST['e_comment'])) {
+$comment=$_POST['comment'];
+function textFunc( $str, $maxLen )
+	{
+	if ( mb_strlen( $str ) > $maxLen )
+		{
+		preg_match( '/^.{0,'.$maxLen.'} .*?/ui', $str, $match );
+		return $match[0].'...';
+		}
+	else {
+		return $str;
+		}
+	}
+
+$cut=textFunc( $comment, 150 ); 
+
+$query= mysql_query("INSERT INTO comment VALUES ('','$st','$log', '$cut')") or die(mysql_error());
+}
+?>
+<div class="coment">
+<h3>ДОДАТИ КОМЕНТАР</h3>
+<form method="post">
+<p><b>Коментар:</b></p>
+<textarea name="comment" cols="40" rows="3" required></textarea></p>
+<input type="submit" name="e_comment" value="Додати коментар" />
+</form>
+</div>
+
+<?php
+
+	$result = mysql_query("SELECT * FROM comment WHERE id_article='$st'") or die(mysql_error());
+	$data = mysql_fetch_array($result);
+
+
+		do {
+		printf('
+		<div><br>
+		<p><i><b>%s</b></i></p>
+		<p>%s</p>
+		</div>
+		',$data["login"], $data["comment"]);
+			}
+			
+	while($data = mysql_fetch_array($result));
+		
+		?>
+
+

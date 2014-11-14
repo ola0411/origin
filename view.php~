@@ -1,0 +1,83 @@
+<?php
+session_start();
+
+$conect=mysql_connect("localhost", "root", "123") or die(mysql_error());
+mysql_select_db("ololo");
+mysql_query("SET NAMES 'utf8'"); 
+mysql_query("SET CHARACTER SET 'utf8'");
+mysql_query("SET SESSION collation_connection = 'utf8_general_ci'");
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Рецепти</title>
+<meta http-equiv="Content-Type" content="text/html"; charset="utf-8">
+<link rel="stylesheet" type="text/css" href="css/style_view.css">
+</head>
+<body>
+<div class="wrapper">
+<div class="header">
+<div class="image">
+<img src="img/baner.jpg"/>
+	<h2><span>Рецепти</span></h2>
+	</div>
+	<div class="content"></div>
+		<div class="left">
+			<div class="article">
+						<?php
+					if (!isset($_GET["id"])){	
+					$id=1;
+					} else
+					{
+					$id=$_GET["id"];
+					}
+					$st=$id;
+					
+					$result = mysql_query("SELECT * FROM article WHERE id='$id'") or die(mysql_error());
+					$data = mysql_fetch_array($result);
+					
+						do {
+						printf('
+						<div>
+						<img src="img/article/%s">
+						<h1>%s</h1>
+						<a href="edit_article.php?id=%s">[ред]</a>
+						<p>%s</p>
+						</div>
+						',$data["url"], $data["title"], $data["id"], $data["desk"]);
+							}
+					while	($data = mysql_fetch_array($result));
+							?>
+		<div style="clear:both"></div>
+		</div>
+		
+		<?php
+		include ("php/rating.php");
+		include ("php/comment.php");
+		
+		?>
+		
+		</div>
+	<div class="right">
+	<div class="authorization">
+	<?php
+	include ("php/authorization.php");
+	?>
+	</div>
+	<br>
+	<div class="menu">
+	<menu>
+<li><a href=index.php>На головну</a></li>
+<li><a href=new_article.php>Створити нову статтю</a></li>
+ <li><a href=user.php>Перегляд користувачів</a></li>
+ 	</div>
+</div>
+<div style="clear:both"></div>
+
+<div class="footer">Кулінарні рецепти © 2014</div>
+</div>
+<div style="clear:both"></div>
+</div>
+</body>
+</html>

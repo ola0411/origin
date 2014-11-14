@@ -1,0 +1,74 @@
+<?php
+$connect=mysql_connect('localhost', 'root', '123') or die (mysql_error());
+mysql_select_db("ololo");
+mysql_set_charset('utf8');
+?>
+
+<div class="rating">
+<form method="post">
+<b>Корисно на:</b>
+<label><input type="radio" name="score" value="1" onClick="rating.submit();"> 1</label>
+<label><input type="radio" name="score" value="2" onClick="rating.submit();"> 2</label>
+<label><input type="radio" name="score" value="3" onClick="rating.submit();"> 3</label>
+<label><input type="radio" name="score" value="4" onClick="rating.submit();"> 4</label>
+<label><input type="radio" name="score" value="5" onClick="rating.submit();"> 5</label>
+<input type="submit" name="golos" value="Оцінити" />
+	
+				<?php
+				if (isset($_POST['golos'])) {
+    
+	$rating=$_POST['score'];
+	switch ($_POST['score'])
+	
+	{
+        case 1:  echo '<b>Ваша оцінка матеріалу '.$_POST['score']. '.  Дякуємо!</b><br><br>'; break;
+        case 2:  echo '<b>Ваша оцінка матеріалу '.$_POST['score']. '.  Дякуємо!</b><br><br>'; break;
+        case 3:  echo '<b>Ваша оцінка матеріалу '.$_POST['score']. '.  Дякуємо!</b><br><br>'; break;
+        case 4:  echo '<b>Ваша оцінка матеріалу'.$_POST['score']. '.  Дякуємо!</b><br><br>'; break;
+        case 5:  echo '<b>Ваша оцінка матеріалу '.$_POST['score']. '.  Дякуємо!</b><br><br>'; break;
+  
+        default: echo 'Ви ще не голосували!';
+	}
+	$query= mysql_query("INSERT INTO rating VALUES ('', '$st', '$rating')") or die(mysql_error());
+		
+				//Кількість голосів
+				$result = mysql_query("SELECT * FROM rating WHERE id_article='$st'") or die(mysql_error());
+				$num_posts = mysql_num_rows($result);
+				if  ($num_posts > 0) { 
+				echo "<b>Кількість голосів:  </b><i>$num_posts</i>";
+				
+				//Середня оцінка
+				$result = mysql_query("SELECT AVG(rating) FROM rating WHERE id_article='$st'") or die(mysql_error());
+				$row = mysql_fetch_array($result);
+
+				echo "<b> Середня оцінка матеріалу:</b> $row[0] ";
+				}
+				else {
+				echo "За цей матеріал ще ніхто не голосував";
+				}
+			}
+			
+			
+			else {
+			
+			//Кількість голосів
+				$result = mysql_query("SELECT * FROM rating WHERE id_article='$st'") or die(mysql_error());
+				$num_posts = mysql_num_rows($result);
+				if  ($num_posts > 0) { 
+				echo "<b>Кількість голосів:  </b><i>$num_posts</i>";
+				
+				//Середня оцінка
+				$result = mysql_query("SELECT AVG(rating) FROM rating WHERE id_article='$st'") or die(mysql_error());
+				$row = mysql_fetch_array($result);
+
+				echo "<b> Середня оцінка матеріалу:</b> $row[0] ";
+				}
+				else {
+				echo "За цей матеріал ще ніхто не голосував";
+				}
+				}
+				?>
+
+</div>	
+</form><br>	
+	
