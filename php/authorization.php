@@ -10,20 +10,36 @@
 	if (isset($_POST["enter"])) {
 		$e_login = $_POST["e_login"];
 		$e_password= md5($_POST["e_password"]);
-		$row = $db->query("select * from reg WHERE login='$e_login';")->fetch();
+		$row = $db->query("select * from reg WHERE login='$e_login'")->fetch();
 		
 		if ($row['password'] == $e_password) {
 			$_SESSION["name"] = $e_login;
+			$_SESSION["rank"] = $row['rank'];
 		}
 		else {
 			echo "Username or password incorrect";
 		}
 		$login = $_SESSION["name"];
+		$rank = $_SESSION["rank"];
 		$check = true;
 		$_SESSION["auth"] = $check;
-	}
+		}
+if($rank == 4) {
 	if (isset($_POST["output"])) {
 		unset($_SESSION["name"]);
+		unset($_SESSION["rank"]);
+		session_destroy();
+	}
+	echo 'This user has blocked the site administrator . Avtoryzaytsiya failure<br>';
+	echo '
+	<form method="post">
+	<input type="submit" name="output" value="Exit"/>
+	</form>';
+}
+else {
+	if (isset($_POST["output"])) {
+		unset($_SESSION["name"]);
+		unset($_SESSION["rank"]);
 		session_destroy();
 	}
 	@$login = $_SESSION["name"];
@@ -48,7 +64,6 @@
 		<input type="submit" name="output" value="Exit"/>';
 
 	}
+}
 ?>
 <br><a href="register.php" target="_blank" onclick="window.open(this.href,this.target,'width=250,height=225,scrollbars=1');return false;">Registr</a>
-
-

@@ -2,10 +2,10 @@
 	session_start();
 	@$login = $_SESSION["name"];
 	@$check = $_SESSION["auth"];
+	@$rank = $_SESSION["rank"];
 	error_reporting(E_ALL);
 	try {   
 		$db = new PDO('mysql:host=localhost;dbname=ololo; charset=utf8','root','123');
-		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 	catch(PDOException $e) {
 		die("Error: ".$e->getMessage());
@@ -15,7 +15,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Рецепти</title>
+		<title>Recipes</title>
 		<meta http-equiv = "Content-Type" content = "text/html"; charset = "utf-8">
 		<link rel = "stylesheet" type = "text/css" href = "css/style.css">
 	</head>
@@ -24,36 +24,29 @@
 			<div class = "header">
 				<div class = "image">
 					<img src = "img/baner.jpg"/>
-					<h2><span>Рецепти</span></h2>
+					<h2><span>Recipes</span></h2>
 				</div>
 			</div>
 			<div class = "left">
 				<div class = "edit_user">
+					<form method = "post">
+						<b>Edit rank:</b>
+						<label><input type ="radio" name ="score" value ="1" onClick = "rating.submit();">admin</label>
+						<label><input type ="radio" name ="score" value ="2" onClick = "rating.submit();">editor</label>
+						<label><input type ="radio" name ="score" value ="3" onClick = "rating.submit();">user</label>
+						<label><input type ="radio" name ="score" value ="4" onClick = "rating.submit();">anonym</label>
+						<br><br><input type="submit" name="edit" value="Save" />
 					<?php
-						if(isset($_POST['edit_user'])) {
-							$login = $_POST['login'];
-							$password = $_POST['password'];
-							$r_password = $_POST['r_password'];
-				
-							if($password == $r_password) {
-								$password = md5($password);
-								echo 'Password successfully changed';	
-							}
-							else {
-								echo 'Passwords do not match';
-							}
-							$query = $db->prepare("UPDATE reg SET login = '$login', password = '$password' WHERE login = '$login'");
-						}
-							$result = $db->query("SELECT * FROM reg WHERE login = '$login'");
-							$row = $result->rowCount();
+						$user_id = $_GET["id"];
 
-						while ($row = $result->fetch()) {
-							echo "<form method=\"post\">\n";
-							echo "<h2>My Account :</h2><br>";
-						    echo "<p><b>Login:</b><br><br><input type=\"text\" size=\"40\" value=\"".$row['login']."\" name=\"login\"/><br><br>";
-						    echo "<p><b>New password:</b><br><br><input type=\"password\" name=\"password\" size=\"40\" ><br><br>";
-						   	echo "<p><b>Confirm password:</b><br><br><input type=\"password\" name=\"r_password\" size=\"40\"><br><br>";
-							echo "<input type=\"submit\" name=\"edit_user\" class=\"buttons\" value=\"Save\" />";
+							if (isset($_POST['golos'])) {
+	    						$rating = $_POST['score'];
+								switch ($_POST['score']) {
+									case 1: $_POST['score'];
+									case 2: $_POST['score'];
+									case 3: $_POST['score'];
+									case 4: $_POST['score'];	
+								}
 						}
 					?>
 				</div>
@@ -69,8 +62,10 @@
 							if($check == true) {
 								echo '<li><a href = new_article.php>Create new article</a></li>';
 							}
-						?>
-						<li><a href = user.php>Browsing members</a></li>
+							if($rank == 1) {
+			 					echo '<li><a href = user.php>Browsing members</a></li>';
+			 				}
+			 			?>	
 					</menu>
 				</div>
 			</div>

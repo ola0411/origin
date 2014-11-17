@@ -1,6 +1,8 @@
 <?php
 	session_start();
 	@$check = $_SESSION["auth"];
+	@$rank = $_SESSION["rank"];
+	
 	error_reporting(E_ALL);
 	try {
 	$db = new PDO('mysql:host=localhost;dbname=ololo; charset=utf8','root','123');
@@ -74,11 +76,13 @@
 				<div class = "menu">
 					<menu>
 						<?php
-							if($check == true) {
+							if($rank == 1 || $rank == 2) {
 								echo '<li><a href = new_article.php>Create new article</a></li>';
 							}
-						?>
-		 				<li><a href = user.php>Browsing members</a></li>
+							if($rank == 1) {
+			 				echo '<li><a href = user.php>Browsing members</a></li>';
+			 				}	
+		 				?>
 		 			</menu>
 		 		</div>
 		 	</div>
