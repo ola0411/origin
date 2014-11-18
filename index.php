@@ -34,10 +34,9 @@
 					if (empty($data['id'])) {
 						$data['id'] = 1;
 					}
-					$max_posts = 10;
+					$max_posts = 110;
 					$num_posts = $result->rowCount();
 					$num_pages = intval(($num_posts-1) / $max_posts)+1;
-
 					for($i=1 ; $i<=$num_pages; $i++)
  					echo "<a href='/mysite/index.php?page=$i'>$i</a>";
  
@@ -62,7 +61,6 @@
 						    <b><i>%s</i></b><br>
 						    <i>%s</i>
 						    </div>
-
 							',$data["url"], $data["id"], $data["title"], $data["m_desk"], $data["id"], $data["login"], $data["date"]);
 							}
 					}

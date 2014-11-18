@@ -31,33 +31,34 @@
 				<div class = "article">
 					<?php
 						if (!isset($_GET["id"])) {
-							$id = 1;
-						}
-						else {
-							$id = $_GET['id'];
-						}
-							$result = $db->query("select * from article1 WHERE id = '$id'");
-							$data = $result->fetch();
-							if (!empty($data)) {
-								do {
-									printf('
-									<div>
-									<img src = "img/article/%s">
-									<h1>%s</h1>
-									<a href = "edit_article.php?id=%s">[edit]</a>
-									<a href = "delete_article.php?id=%s">[delete]</a>
-									<p>%s</p>
-						 			<b><i>%s</i></b><br>
-							    	<i>%s</i>
-							   		<div style = "clear:both"></div>
-									</div>
-									',$data["url"], $data["title"], $data["id"], $data["id"], $data["desk"], $data["login"], $data["date"]);
-								}
-								while	($data = $result->fetch());
-						}
-						else {
-							print('Page not found');
-						}
+								$id = 1;
+							}
+							else {
+								$id = $_GET['id'];
+							}
+								$result = $db->query("select * from article1 WHERE id = '$id'");
+								$data = $result->fetch();
+								if (!empty($data)) {
+									do {
+										printf('
+										<div>
+										<img src = "img/article/%s">
+										<h1>%s</h1>
+										<a href = "edit_article.php?id=%s">[edit]</a>
+										<a href = "delete_article.php?id=%s">[delete]</a>
+										<p>%s</p>
+							 			<b><i>%s</i></b><br>
+								    	<i>%s</i>
+								   		<div style = "clear:both"></div>
+										</div>
+										',$data["url"], $data["title"], $data["id"], $data["id"], $data["desk"], $data["login"], $data["date"]);
+									}
+									while	($data = $result->fetch());
+							}
+							else {
+								print('Page not found');
+							}
+						
 					?>
 				</div>
 			</div>

@@ -32,20 +32,28 @@
 				<div class = "info_user">
 					<?php
 						echo '<a href = "profile.php">Change Рrofile</a><br>';
+						echo '<a href = "del_prof.php">Delete Рrofile</a><br>';
 						$result = $db->query("SELECT * FROM reg WHERE login ='$login'");
 						$data = $result->fetch();
 							do {
+							
 								printf('
 								<br><div>
 								<ol>
 								<li><b>Login:</b>%s </li><br>
 								<li><b>Е-mail:</b>%s </li><br>
+								<li><b>Name:</b>%s </li><br>
+								<li><b>Surname:</b>%s</li><br>
+								<li><b>Date registration:</b>%s</li><br>
+								<li><b>Date of entrance:</b>%s</li><br>
 								</ol><br>
 								</div>
-								',$data["login"], $data["email"]);
+								',$data["login"], $data["email"], $data["name"], $data["last_name"], $data["date"], $data["date_av"]);
 							}
 							while	($data = $result->fetch());
+
 					?>
+					
 				</div>
 			</div>
 			<div class ="right">

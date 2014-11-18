@@ -53,7 +53,7 @@
 					}
 				}
 				else {
-							echo 'You notlack rights';
+					echo 'You notlack rights';
 				}
 				?>
 		

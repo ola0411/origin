@@ -29,26 +29,42 @@
 			</div>
 			<div class = "left">
 				<div class = "edit_user">
-					<form method = "post">
-						<b>Edit rank:</b>
-						<label><input type ="radio" name ="score" value ="1" onClick = "rating.submit();">admin</label>
-						<label><input type ="radio" name ="score" value ="2" onClick = "rating.submit();">editor</label>
-						<label><input type ="radio" name ="score" value ="3" onClick = "rating.submit();">user</label>
-						<label><input type ="radio" name ="score" value ="4" onClick = "rating.submit();">anonym</label>
-						<br><br><input type="submit" name="edit" value="Save" />
+					
 					<?php
-						$user_id = $_GET["id"];
+					$id = $_GET["id"];
+				
+						if(isset($_POST['save'])) {
+							$login = $_POST['login'];
+							$email = $_POST["email"];
+							$name = $_POST["name"];
+							$last_name = $_POST["last_name"];
+							$rank1 = $_POST['score'];
 
-							if (isset($_POST['golos'])) {
-	    						$rating = $_POST['score'];
-								switch ($_POST['score']) {
-									case 1: $_POST['score'];
-									case 2: $_POST['score'];
-									case 3: $_POST['score'];
-									case 4: $_POST['score'];	
-								}
+						$query = $db->query("UPDATE reg SET login = '$login', email ='$email', rank = '$rank1', name = '$name', last_name = '$last_name' WHERE id = '$id'");
+					}
+							$result = $db->query("SELECT * FROM reg WHERE id = '$id'");
+							$row = $result->rowCount();
+
+ 						while ($row = $result->fetch()) {
+							echo "<form method=\"post\">\n";
+							echo "<h2>Account:</h2><br>";
+						    echo "<p><b>Login:</b><br><br><input type=\"text\" size=\"40\" value=\"".$row['login']."\" name=\"login\"/><br><br>";
+						    echo "<p><b>E-mail:</b><br><br><input type =\"text\" size=\"40\" value =\"".$row['email']."\" name =\"email\"/><br><br>";
+						    echo "<p><b>Your Name:</b><br><br><input type =\"text\" size=\"40\" value =\"".$row['name']."\" name =\"name\"/><br><br>";
+						    echo "<p><b>Your Surname:</b><br><br><input type =\"text\" size=\"40\" value =\"".$row['last_name']."\" name =\"last_name\"/><br><br>";
+						    echo '<b>Edit rank:</b>
+						    		<label><input type ="radio" name ="score" value ="1" onClick = "rank1.submit() ;">admin</label>
+									<label><input type ="radio" name ="score" value ="2" onClick = "rank1.submit() ;">editor</label>
+									<label><input type ="radio" checked name ="score" value ="3" onClick = "rank1.submit() ;">user</label>
+									<label><input type ="radio" name ="score" value ="4" onClick = "rank1.submit() ;">anonym</label>
+									<br><br><input type="submit" name="save" value="Save" />
+									</form>';
 						}
 					?>
+					
+						
+						
+					</form>	
 				</div>
 			</div>
 			<div class = "right">
