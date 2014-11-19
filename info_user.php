@@ -29,10 +29,10 @@
 				</div>
 			</div>
 			<div class = "left">
-				<div class = "info_user">
+				<div class = "avatar">
 					<?php
 						echo '<a href = "profile.php">Change Рrofile</a><br>';
-						echo '<a href = "del_prof.php">Delete Рrofile</a><br>';
+						echo '<a href = "php/dell_prof.php">Delete Рrofile</a><br>';
 						$result = $db->query("SELECT * FROM reg WHERE login ='$login'");
 						$data = $result->fetch();
 							do {
@@ -40,6 +40,7 @@
 								printf('
 								<br><div>
 								<ol>
+								<img src ="%s"/>
 								<li><b>Login:</b>%s </li><br>
 								<li><b>Е-mail:</b>%s </li><br>
 								<li><b>Name:</b>%s </li><br>
@@ -48,7 +49,7 @@
 								<li><b>Date of entrance:</b>%s</li><br>
 								</ol><br>
 								</div>
-								',$data["login"], $data["email"], $data["name"], $data["last_name"], $data["date"], $data["date_av"]);
+								',$data["img"], $data["login"], $data["email"], $data["name"], $data["last_name"], $data["date"], $data["date_av"]);
 							}
 							while	($data = $result->fetch());
 

@@ -2,6 +2,7 @@
 	session_start();
 	@$check = $_SESSION["auth"];
 	@$rank = $_SESSION["rank"];
+	@$login = $_SESSION['name'];
 	error_reporting(E_ALL);
 	try	{
 		$db = new PDO('mysql:host=localhost;dbname=ololo; charset=utf8','root','123');
@@ -29,16 +30,16 @@
 		<div class="left">
 			<div class="edit_article">
 				<?php
-				if($rank == 1 || $rank == 2) {
-					$id = $_GET["id"];	
-					if (isset($_POST['edit'])) {
-						header("Location: http://localhost/mysite/view.php?id = $id");
-						$title = $_POST['title'];
-						$m_desk = $_POST['m_desk'];
-						$desk = $_POST['desk'];
-						$url = $_POST['url'];
-						$id = $_GET["id"];
-						$query = $db->query("UPDATE article1 SET title = '$title', m_desk = '$m_desk', desk = '$desk', url = '$url' WHERE id = '$id'");
+				$id = $_GET["id"];
+					if($rank == 1 || $rank == 2) {
+						if (isset($_POST['edit'])) {
+						header("Location: http://localhost/mysite/view.php?id=$id");
+						$title  = strip_tags($_POST['title']);
+						$m_desk = strip_tags($_POST['m_desk']);
+						$desk   = strip_tags($_POST['desk']);
+						$url    = strip_tags($_POST['url']);
+						$id     = strip_tags($_GET["id"]);
+						$query  = $db->query("UPDATE article1 SET title = '$title', m_desk = '$m_desk', desk = '$desk', url = '$url' WHERE id = '$id'");
 					}
 						$result = $db->query("SELECT * FROM article1 WHERE id ='$id'");
 						$row = $result->rowCount();

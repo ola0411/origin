@@ -30,9 +30,8 @@
 			<div class = "left">
 				<div class = "edit_user">
 					
-					<?php
-					$id = $_GET["id"];
-				
+					<?php	
+						$id = $_GET["id"];		
 						if(isset($_POST['save'])) {
 							$login = $_POST['login'];
 							$email = $_POST["email"];
@@ -40,11 +39,12 @@
 							$last_name = $_POST["last_name"];
 							$rank1 = $_POST['score'];
 
-						$query = $db->query("UPDATE reg SET login = '$login', email ='$email', rank = '$rank1', name = '$name', last_name = '$last_name' WHERE id = '$id'");
+						$query = $db->query("UPDATE reg SET login = '$login', email = '$email', rank = '$rank1', name = '$name', last_name = '$last_name' WHERE id = '$id'");
+						header("Location: http://localhost/mysite/user.php");
 					}
 							$result = $db->query("SELECT * FROM reg WHERE id = '$id'");
 							$row = $result->rowCount();
-
+					if (!empty($row)) {
  						while ($row = $result->fetch()) {
 							echo "<form method=\"post\">\n";
 							echo "<h2>Account:</h2><br>";
@@ -59,7 +59,12 @@
 									<label><input type ="radio" name ="score" value ="4" onClick = "rank1.submit() ;">anonym</label>
 									<br><br><input type="submit" name="save" value="Save" />
 									</form>';
+
 						}
+					}
+					else {
+						echo 'Page not fount';
+					}
 					?>
 					
 						

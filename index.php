@@ -2,6 +2,7 @@
 	session_start();
 	@$check = $_SESSION["auth"];
 	@$rank = $_SESSION["rank"];
+	@$login = $_SESSION['name'];
 	
 	error_reporting(E_ALL);
 	try {

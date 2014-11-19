@@ -2,6 +2,7 @@
 	session_start();
 	@$check = $_SESSION["auth"];
 	@$rank = $_SESSION["rank"];
+	@$login = $_SESSION['name'];
 	error_reporting(E_ALL);
 	try {
 		$db = new PDO('mysql:host=localhost;dbname=ololo; charset=utf8','root','123');
@@ -35,6 +36,8 @@
 							}
 							else {
 								$id = $_GET['id'];
+								$_SESSION['id_article'] = $_GET['id'];
+								$id_article = $_SESSION['id_article'];
 							}
 								$result = $db->query("select * from article1 WHERE id = '$id'");
 								$data = $result->fetch();
@@ -45,7 +48,7 @@
 										<img src = "img/article/%s">
 										<h1>%s</h1>
 										<a href = "edit_article.php?id=%s">[edit]</a>
-										<a href = "delete_article.php?id=%s">[delete]</a>
+										<a href = "php/confirmation.php?id=%s">[delete]</a>
 										<p>%s</p>
 							 			<b><i>%s</i></b><br>
 								    	<i>%s</i>
@@ -54,10 +57,10 @@
 										',$data["url"], $data["title"], $data["id"], $data["id"], $data["desk"], $data["login"], $data["date"]);
 									}
 									while	($data = $result->fetch());
-							}
-							else {
-								print('Page not found');
-							}
+								}
+								else {
+									print('Page not found');
+								}
 						
 					?>
 				</div>

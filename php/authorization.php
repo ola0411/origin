@@ -18,6 +18,7 @@
 			$_SESSION["name"] = $e_login;
 			$_SESSION["rank"] = $row['rank'];
 			$_SESSION["id_user"] = $row['id'];
+
 			
 		}
 		else {
@@ -26,8 +27,8 @@
 
 		@$login = $_SESSION["name"];
 		@$rank = $_SESSION["rank"];
-		$check = true;
-		$_SESSION["auth"] = $check;
+		@$id_user = $_SESSION["id_user"];
+		@$login1 = $_SESSION["login"];
 		}
 if($rank == 4) {
 	if (isset($_POST["output"])) {
@@ -47,28 +48,27 @@ else {
 		unset($_SESSION["rank"]);
 		session_destroy();
 	}
-	@$login = $_SESSION["name"];
-	@$id_user = $_SESSION["id_user"];
-
+		if (isset($_SESSION["login"])) {
+			$_SESSION["name"]=$_SESSION["login"];
+			$login=$_SESSION["name"];
+		}
 	
-	if (isset($_SESSION["login"])) {
-		$_SESSION["name"] = $_SESSION["login"];
-	}
 	if(!isset($_SESSION["name"])){
 		echo '
 			<form method="post">
 				<h3>Log in </h3>
-				<input type="text" name="e_login" placeholder="Login" required /> <br>
-				<input type="password" name="e_password" placeholder="Password" required /> <br>
-				<input type="submit" name="enter" value="Input" />
+				<input type = "text" name = "e_login" placeholder = "Login" required /> <br>
+				<input type = "password" name = "e_password" placeholder = "Password" required /> <br>
+				<input type = "submit" name = "enter" value = "Input" />
 			</form>';
+			echo '<a href = "register.php" target="_blank" onclick="window.open(this.href,this.target,"width=250,height=225,scrollbars=1");return false;">Registr</a>';
 	}
 	else {
-		echo 'login'."<a href='info_user.php'><b>$login</b></a>".'
+		echo 'login'."<a href = 'info_user.php'><b>$login</b></a>".'
 		<br>
-		<form method="post">
-		<input type="submit" name="output" value="Exit"/>';
+		<form method ="post">
+		<input type = "submit" name = "output" value = "Exit"/>';
 	}
 }
+
 ?>
-<br><a href="register.php" target="_blank" onclick="window.open(this.href,this.target,'width=250,height=225,scrollbars=1');return false;">Registr</a>

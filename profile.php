@@ -31,29 +31,20 @@
 				<div class = "edit_user">
 					
 					<?php
+						include ("php/file.php");
 						if(isset($_POST['save'])) {
-							$login = $_POST['login'];
-							$password = $_POST['password'];
-							$r_password = $_POST['r_password'];
+							$login = $_POST["login"];
 							$email = $_POST["email"];
 							$name = $_POST["name"];
 							$last_name = $_POST["last_name"];
-							$img = '/img/avatar/'. $_POST['filename'];
 				
-							if($password == $r_password) {
-								$password = md5($password);
-								echo 'Password successfully changed';	
-							}
-							else {
-								echo 'Passwords do not match';
-							}
-							$query = $db->query("UPDATE reg SET login = '$login', password = '$password', email ='$email', name = '$name', last_name = '$last_name', img = '$img' WHERE login = '$login'");
+							$query = $db->query("UPDATE reg SET login = '$login', email = '$email', name = '$name', last_name = '$last_name' WHERE login = '$login'");
 							header('Location: http://localhost/mysite/info_user.php');
 						}
 							$result = $db->query("SELECT * FROM reg WHERE login = '$login'");
 							$row = $result->rowCount();
-
- 						while ($row = $result->fetch()) {
+							
+						while ($row = $result->fetch()) {
 							echo "<form method=\"post\">\n";
 							echo "<h2>My Account :</h2>";
 							echo '<a href ="new_password.php">New password</a><br>';
@@ -61,10 +52,7 @@
 						    echo "<p><b>E-mail:</b><br><br><input type =\"text\" size=\"40\" value =\"".$row['email']."\" name =\"email\"/><br><br>";
 						    echo "<p><b>Your Name:</b><br><br><input type =\"text\" size=\"40\" value =\"".$row['name']."\" name =\"name\"/><br><br>";
 						    echo "<p><b>Your Surname:</b><br><br><input type =\"text\" size=\"40\" value =\"".$row['last_name']."\" name =\"last_name\"/><br><br>";
-						    echo '<form method="post">
-						 		<p><b>Avatar:</b><br><br><input type="file" name="filename" size="40" required><br><br>
-								<input type="submit" name="save" value="Input" />
-								</form>';
+						    echo '<input type = "submit" name = "save" />';
 						}
 					?>
 				</div>	

@@ -34,16 +34,17 @@
 						if($rank == 1) {
 							$result = $db->query("select * from reg");
 							$data = $result->fetch();
-							do {
-								printf('
-								<div>
-								<ul>
-								<li><b>Login:</b>%s  <b>Е-mail:</b>%s  <a href = "edit_user.php?id=%s">[edit]</a> <a href = "del_user.php?id=%s">[delete]</a>
-								</ul><br>
-								</div>
-								',$data['login'], $data['email'], $data['id'], $data['id']);
-							}
-							while ($data = $result->fetch());
+							
+								do {
+									printf('
+									<div>
+									<ul>
+									<li><b>Login:</b>%s  <b>Е-mail:</b>%s  <a href = "edit_user.php?id=%s">[edit]</a> <a href = "php/dell_user.php?id=%s">[delete]</a>
+									</ul><br>
+									</div>
+									',$data['login'], $data['email'], $data['id'], $data['id']);
+								}
+								while ($data = $result->fetch());
 						}
 						else {
 								echo 'You notlack rights';

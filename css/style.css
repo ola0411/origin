@@ -133,6 +133,11 @@ color:#45201c;
 .title:hover {
 color:#1e7e07;
 }
+.avatar img {
+	width:150px;
+	height:150px;
+	margin:3px;
+}
 
 .right {
 width:180px;
