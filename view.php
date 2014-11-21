@@ -11,12 +11,14 @@
 	catch(PDOException $e) {
     die("Error: ".$e->getMessage());
 	}
-?>
+	include ("language.php");
+  $url = $_SERVER["REQUEST_URI"];
+  ?>
 
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Recipes</title>
+		<title><?php echo $lang[0][1]?></title>
 		<meta http-equiv = "Content-Type" content = "text/html"; charset="utf-8">
 		<link rel="stylesheet" type = "text/css" href = "css/style_view.css">
 	</head>
@@ -24,13 +26,18 @@
 		<div class = "wrapper">
 			<div class = "header">
 				<div class = "image">
+					<div class = "lang">
+						<a href ="<?php echo $url . '&lang=ua'; ?>"><img src = "img/ua.jpg"></a>
+						<a href ="<?php echo $url . '&lang=eng'; ?>"><img src = "img/eng.jpg"></a>
+					</div>
 					<img src = "img/baner.jpg"/>
-					<h2><span>Recipes</span></h2>
+					<h2><span><?php echo $lang[0][1]?></span></h2>
 				</div>
 			</div>
 			<div class = "left">
 				<div class = "article">
 					<?php
+
 						if (!isset($_GET["id"])) {
 								$id = 1;
 							}
@@ -39,29 +46,39 @@
 								$_SESSION['id_article'] = $_GET['id'];
 								$id_article = $_SESSION['id_article'];
 							}
-								$result = $db->query("select * from article1 WHERE id = '$id'");
+                  if(isset($_GET['lang'])) {
+                    switch($_GET['lang']):
+                      case 'ua':  $result = $db->query("SELECT * FROM article_ua WHERE id = '$id'");
+                        break;
+                      case 'eng': $result = $db->query("SELECT * FROM article_eng WHERE id = '$id'");
+                        break;
+                    endswitch;
+            }
+            else {
+            $result = $db->query("SELECT * FROM article_ua WHERE id = '$id'");
+            }
+
 								$data = $result->fetch();
 								if (!empty($data)) {
 									do {
+
 										printf('
 										<div>
 										<img src = "img/article/%s">
 										<h1>%s</h1>
-										<a href = "edit_article.php?id=%s">[edit]</a>
-										<a href = "php/confirmation.php?id=%s">[delete]</a>
+										<a href = "edit_article.php?id=%s"> [' . $lang[33][1] . '] </a>
+										<a href = "php/confirmation.php?id=%s">[' . $lang[32][1] . ']</a>
 										<p>%s</p>
 							 			<b><i>%s</i></b><br>
 								    	<i>%s</i>
-								   		<div style = "clear:both"></div>
 										</div>
-										',$data["url"], $data["title"], $data["id"], $data["id"], $data["desk"], $data["login"], $data["date"]);
+										',$data['url'], $data['title'], $data['id'], $data['id'], $data['desk'], $data['login'], $data['date']);
 									}
 									while	($data = $result->fetch());
 								}
 								else {
-									print('Page not found');
+									print($lang[5][1]);
 								}
-						
 					?>
 				</div>
 			</div>
@@ -71,19 +88,22 @@
 				</div><br>
 				<div class = "menu">
 					<menu>
-						<li><a href = index.php>Home</a></li>
+						<li><a href = index.php><?php echo $lang[1][1]; ?></a></li>
 							<?php
 								if($rank == 1 || $rank == 2) {
-									echo '<li><a href = new_article.php>Create new article</a></li>';
+									echo '<li><a href="new_article.php">' . $lang[2][1] . '</a></li>';
 								}
 								if($rank == 1) {
-			 						echo '<li><a href = user.php>Browsing members</a></li>';
+			 						echo '<li><a href="user.php">' . $lang[3][1] . '</a></li>';
+                  echo '<li><a href = "language_editor.php">' . $lang[62][1] . '</a></li>';
 			 					}
 			 				?>
 	 				</menu>
 	 			</div>
 			</div>
-			<div class = "footer">Recipes © 2014</div>
+			<div class = "footer"><?php echo $lang[4][1]; ?></div>
 		</div>
 	</body>
 </html>
+
+

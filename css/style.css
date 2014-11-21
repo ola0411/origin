@@ -16,7 +16,6 @@ margin:5px;
 display: inline-block;
 font-weight: bold;
 }
-
 .wrapper {
 background:#e9f0bc;
 width:1200px;
@@ -29,10 +28,17 @@ width:100%;
 height:200px;
 border-bottom: 15px solid #45201c;
 }
+.lang img {
+margin:0px;
+width: 40px;
+height: 20px;
+clear:both;
+}
 
 .image {
 position: relative;
-width: 100%; 
+width: 100%;
+
 }
 
 .image h2 {
@@ -58,6 +64,21 @@ width:940px;
 padding:20px;
 float:left;
 clear:both;
+
+}
+.register {
+margin:15px;
+text-align:center;
+background:#fff;
+border-radius: 10px;
+clear:both;
+width:930px;
+padding: 15px;
+margin-bottom:10px;
+}
+.register h3{
+font-size:18px;
+color:#6a3d1c;
 
 }
 
@@ -105,6 +126,16 @@ background:#ffffff;
 margin:10px;
 padding:15px;
 border-radius: 10px;
+
+}
+.user table {
+border-collapse: collapse;
+width: 700px;
+}
+
+.user td {
+width: 350px
+
 }
 
 .edit_article textarea {
@@ -171,7 +202,7 @@ width:180px;
 .menu menu li:hover {
 background:#e6cf4b;
 }
-  
+
 .authorization {
 background:#ffffff;
 margin:5px;

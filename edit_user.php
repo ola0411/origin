@@ -1,21 +1,18 @@
 <?php
 	session_start();
-	@$login = $_SESSION["name"];
-	@$check = $_SESSION["auth"];
-	@$rank = $_SESSION["rank"];
-	error_reporting(E_ALL);
-	try {   
-		$db = new PDO('mysql:host=localhost;dbname=ololo; charset=utf8','root','123');
-	}
-	catch(PDOException $e) {
-		die("Error: ".$e->getMessage());
-	}
+  $check = isset($_SESSION["auth"]) ? $_SESSION["auth"] : NULL;
+  $rank = isset($_SESSION["rank"]) ? $_SESSION["rank"] : NULL;
+  $login = isset($_SESSION['name']) ? $_SESSION['name'] : NULL;
+
+	include ('includes/connect.php');
+  include ('language.php');
+  $url = $_SERVER["REQUEST_URI"];
 ?>
 
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Recipes</title>
+		<title><?php echo $lang[0][1]; ?></title>
 		<meta http-equiv = "Content-Type" content = "text/html"; charset = "utf-8">
 		<link rel = "stylesheet" type = "text/css" href = "css/style.css">
 	</head>
@@ -23,21 +20,26 @@
 		<div class = "wrapper">
 			<div class = "header">
 				<div class = "image">
+					<div class = "lang">
+					<a href ="<?php echo $url . '&lang=ua'; ?>"><img src = "img/ua.jpg"></a>
+          <a href ="<?php echo $url . '&lang=eng'; ?>"><img src = "img/eng.jpg"></a>
+				</div>
 					<img src = "img/baner.jpg"/>
-					<h2><span>Recipes</span></h2>
+					<h2><span><?php echo $lang[0][1]; ?></span></h2>
 				</div>
 			</div>
 			<div class = "left">
 				<div class = "edit_user">
-					
-					<?php	
-						$id = $_GET["id"];		
+
+					<?php
+						$id = $_GET["id"];
 						if(isset($_POST['save'])) {
 							$login = $_POST['login'];
 							$email = $_POST["email"];
 							$name = $_POST["name"];
 							$last_name = $_POST["last_name"];
 							$rank1 = $_POST['score'];
+
 
 						$query = $db->query("UPDATE reg SET login = '$login', email = '$email', rank = '$rank1', name = '$name', last_name = '$last_name' WHERE id = '$id'");
 						header("Location: http://localhost/mysite/user.php");
@@ -47,29 +49,28 @@
 					if (!empty($row)) {
  						while ($row = $result->fetch()) {
 							echo "<form method=\"post\">\n";
-							echo "<h2>Account:</h2><br>";
-						    echo "<p><b>Login:</b><br><br><input type=\"text\" size=\"40\" value=\"".$row['login']."\" name=\"login\"/><br><br>";
-						    echo "<p><b>E-mail:</b><br><br><input type =\"text\" size=\"40\" value =\"".$row['email']."\" name =\"email\"/><br><br>";
-						    echo "<p><b>Your Name:</b><br><br><input type =\"text\" size=\"40\" value =\"".$row['name']."\" name =\"name\"/><br><br>";
-						    echo "<p><b>Your Surname:</b><br><br><input type =\"text\" size=\"40\" value =\"".$row['last_name']."\" name =\"last_name\"/><br><br>";
-						    echo '<b>Edit rank:</b>
-						    		<label><input type ="radio" name ="score" value ="1" onClick = "rank1.submit() ;">admin</label>
-									<label><input type ="radio" name ="score" value ="2" onClick = "rank1.submit() ;">editor</label>
-									<label><input type ="radio" checked name ="score" value ="3" onClick = "rank1.submit() ;">user</label>
-									<label><input type ="radio" name ="score" value ="4" onClick = "rank1.submit() ;">anonym</label>
-									<br><br><input type="submit" name="save" value="Save" />
-									</form>';
+							echo '<h2>' . $lang[51][1] . '</h2><br>';
+						  echo '<p><b>' . $lang[13][1] . "</b><br><br><input type=\"text\" size=\"40\" value=\"".$row['login']."\" name=\"login\"/><br><br>";
+						  echo '<p><b>' . $lang[14][1] . "</b><br><br><input type =\"text\" size=\"40\" value =\"".$row['email']."\" name =\"email\"/><br><br>";
+						  echo '<p><b>' . $lang[15][1] . "</b><br><br><input type =\"text\" size=\"40\" value =\"".$row['name']."\" name =\"name\"/><br><br>";
+						  echo '<p><b>' . $lang[16][1] . "</b><br><br><input type =\"text\" size=\"40\" value =\"".$row['last_name']."\" name =\"last_name\"/><br><br>";
+						  echo "<b>" . $lang[17][1] . "</b>
+						    	<label><input type ='radio' name ='score' value ='1' onClick = 'rank1.submit() ;'>" . $lang[52][1] . "</label>
+									<label><input type ='radio' name ='score' value ='2' onClick = 'rank1.submit() ;'>" . $lang[53][1] . "</label>
+									<label><input type ='radio' checked name ='score' value ='3' onClick = 'rank1.submit() ;'>" . $lang[54][1] . "</label>
+									<br><br><input type='submit' name='save' value='" . $lang[11][1] . "' />
+									</form>";
 
 						}
 					}
 					else {
-						echo 'Page not fount';
+						echo $lang[5][1];
 					}
 					?>
-					
-						
-						
-					</form>	
+
+
+
+					</form>
 				</div>
 			</div>
 			<div class = "right">
@@ -78,18 +79,19 @@
 				</div><br>
 				<div class = "menu">
 					<menu>
-						<li><a href = index.php>Home</a></li>
+						<li><a href = index.php><?php echo $lang[1][1]?></a></li>
 						<?php
-							if($check == true) {
-								echo '<li><a href = new_article.php>Create new article</a></li>';
+							if($rank == 1 || $rank == 2) {
+				        echo '<li><a href="new_article.php">' . $lang[2][1] . '</a></li>';
 							}
 							if($rank == 1) {
-			 					echo '<li><a href = user.php>Browsing members</a></li>';
+			 					echo '<li><a href = "user.php">' . $lang[3][1] . '</a></li>';
+                echo '<li><a href = "language_editor.php">' . $lang[62][1] . '</a></li>';
 			 				}
-			 			?>	
+			 			?>
 					</menu>
 				</div>
 			</div>
-		<div class="footer">Recipes © 2014</div>
+		<div class="footer"><?php echo $lang[4][1]?></div>
 	</body>
 </html>

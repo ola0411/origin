@@ -34,7 +34,7 @@
 					echo "<b> The average rating of the material:</b> $row[0]";
 				}
 				else {
-					echo "For this item Nobody has voted";
+					echo 'For this item Nobody has voted';
 				}
 		}
 		else {

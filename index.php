@@ -1,22 +1,17 @@
 <?php
 	session_start();
-	@$check = $_SESSION["auth"];
-	@$rank = $_SESSION["rank"];
-	@$login = $_SESSION['name'];
-	
-	error_reporting(E_ALL);
-	try {
-	$db = new PDO('mysql:host=localhost;dbname=ololo; charset=utf8','root','123');
-	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	}
-	catch(PDOException $e) {
-	die("Error: ".$e->getMessage());
-	}
+  $check = isset($_SESSION["auth"]) ? $_SESSION["auth"] : NULL;
+  $rank = isset($_SESSION["rank"]) ? $_SESSION["rank"] : NULL;
+  $login = isset($_SESSION['name']) ? $_SESSION['name'] : NULL;
+
+  include ('includes/connect.php');
+  include ("language.php");
 ?>
+
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Recipes</title>
+		<title><?php echo $lang[0][1]?></title>
 		<meta http-equiv = "Content-Type" content = "text/html"; charset = "utf-8">
 		<link rel = "stylesheet" type = "text/css" href = "css/style.css">
 	</head>
@@ -24,23 +19,38 @@
 		<div class = "wrapper">
 			<div class = "header">
 				<div class = "image">
-					<img src = "img/baner.jpg"/>
-					<h2><span>Recipes</span></h2>
+					<div class = "lang">
+						<a href = "?lang=ua"><img src = "img/ua.jpg"></a>
+						<a href = "?lang=eng"><img src = "img/eng.jpg"></a>
+					</div>
+							<img src = "img/baner.jpg"/>
+						<h2><span><?php echo $lang[0][1]?></span></h2>
 				</div>
 			</div>
 			<div class="left">
 				<?php
-					$result = $db->query("SELECT * FROM article1"); 
-					
+
+            if(isset($_GET['lang'])) {
+              switch($_GET['lang']):
+                case 'ua':  $result = $db->query("SELECT * FROM article_ua");
+                  break;
+                case 'eng': $result = $db->query("SELECT * FROM article_eng");
+                  break;
+              endswitch;
+            }
+            else {
+            $result = $db->query("SELECT * FROM article_ua");
+            }
+
 					if (empty($data['id'])) {
 						$data['id'] = 1;
 					}
-					$max_posts = 110;
+					$max_posts = 5;
 					$num_posts = $result->rowCount();
 					$num_pages = intval(($num_posts-1) / $max_posts)+1;
 					for($i=1 ; $i<=$num_pages; $i++)
  					echo "<a href='/mysite/index.php?page=$i'>$i</a>";
- 
+
  					if (isset($_GET["page"])) {
  						$page = $_GET["page"];
  						if($page < 1)
@@ -53,7 +63,7 @@
  					}
  					$data = $result->fetch();
 					do {
-						if (($data["id"]>($page*$max_posts-$max_posts))&&($data["id"]<=$page*$max_posts)) {
+						if (($data["id"] > ($page*$max_posts-$max_posts)) && ($data["id"] <= $page * $max_posts)) {
 							printf('
 							<div class="article">
 						    <img src="img/article/%s"/>
@@ -76,17 +86,18 @@
 					<menu>
 						<?php
 							if($rank == 1 || $rank == 2) {
-								echo '<li><a href = new_article.php>Create new article</a></li>';
+								echo '<li><a href="new_article.php">' . $lang[2][1] . '</a></li>';
 							}
 							if($rank == 1) {
-			 				echo '<li><a href = user.php>Browsing members</a></li>';
-			 				}	
+			 				echo '<li><a href = "user.php">' . $lang[3][1] . '</a></li>';
+              echo '<li><a href = "language_editor.php">' . $lang[62][1] . '</a></li>';
+			 				}
 		 				?>
 		 			</menu>
 		 		</div>
 		 	</div>
 		 	<div style="clear:both"></div>
 		</div>
-		<div class="footer">Recipes © 2014</div>
+		<div class="footer"><?php echo $lang[4][1]?></div>
 	</body>
 </html>

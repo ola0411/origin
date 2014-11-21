@@ -1,6 +1,7 @@
 <?php
 	session_start();
-	@$rank = $_SESSION["rank"];
+	$rank = isset($_SESSION["rank"]) ? $_SESSION["rank"] : NULL;
+
 	error_reporting(E_ALL);
 	if($rank == 1) {
 		try {
@@ -12,10 +13,10 @@
 
 		if (!isset($_GET["id"])) {
 		$id = 1;
-		} 
+		}
 		else {
 		$id = $_GET["id"];
-		}	
+		}
 		$strSQL = $db->query("DELETE FROM reg WHERE id = $id");
 		header("Location: http://localhost/mysite/user.php");
 	}
