@@ -1,17 +1,10 @@
 <?php
 	session_start();
-	error_reporting(E_ALL);
-	@$login=$_SESSION['name'];
-	@$check = $_SESSION['auth'];
-	@$rank = $_SESSION['rank'];
-	try {
-		$db = new PDO('mysql:host=localhost;dbname=ololo; charset=utf8','root','123');
-		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	}
-	catch(PDOException $e) {
-		die("Error: ".$e->getMessage());
-	}
-  include ("language.php");
+		$check = isset($_SESSION["auth"]) ? $_SESSION["auth"] : NULL;
+		$rank  = isset($_SESSION["rank"]) ? $_SESSION["rank"] : NULL;
+		$login = isset($_SESSION['name']) ? $_SESSION['name'] : NULL;
+	include ('includes/connect.php');
+  include ('language.php');
 ?>
 
 <!DOCTYPE html>
@@ -66,15 +59,14 @@
 				</div><br>
 				<div class = "menu">
 					<menu>
-						<li><a href = index.php><?php echo $lang[1][1]?></a></li>
 						<?php
-
+							echo '<li><a href = "index.php?lang=' . $lange .'">' . $lang[1][1]. '</a></li>';
 							if($check == 1 || $check == 2) {
-								echo '<li><a href="new_article.php">' . $lang[2][1] . '</a></li>';
+								echo '<li><a href="new_article.php?lang=' . $lange . '">' . $lang[2][1] . '</a></li>';
 							}
 							if($check == 1) {
-								echo '<li><a href = "user.php">' . $lang[3][1] . '</a></li>';
-                echo '<li><a href = "language_editor.php">' . $lang[62][1] . '</a></li>';
+								echo '<li><a href = "user.php?lang=' . $lange . '">' . $lang[3][1] . '</a></li>';
+                echo '<li><a href = "language_editor.php?lang=' . $lange . '">' . $lang[62][1] . '</a></li>';
 							}
 						?>
 					</menu>

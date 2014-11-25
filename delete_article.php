@@ -1,28 +1,23 @@
 
 					<?php
 						session_start();
-            $rank = isset($_SESSION["rank"]) ? $_SESSION["rank"] : NULL;
+            $rank = isset($_SESSION['rank']) ? $_SESSION['rank'] : NULL;
+            $id_art = isset($_SESSION['id_art']) ? $_SESSION['id_art'] : NULL;
 						 include ('includes/connect.php');
+             include ('language.php');
 
-            if($rank == 1 || $rank == 2) {
-							try {
-								$db = new PDO('mysql:host=localhost;dbname=ololo; charset=utf8','root','123');
-							}
-							catch(PDOException $e) {
-						    	die("Error: ".$e->getMessage());
-							}
-
-							if (!isset($_GET["id"])) {
+    					if (!isset($_GET['id'])) {
 								$id = 1;
 							}
 							else {
-								$id = $_GET["id"];
+								$id = $_GET['id'];
 							}
-							$strSQL = $db->query("DELETE FROM article1 WHERE id = $id");
-							header("Location: http://localhost/mysite");
-						}
-              include ("language.php");
-						else {
-							echo $lang[5][1];
+              if ($rank == 1 || $rank == 2) {
+  							 $strSQL = $db -> query("DELETE FROM article_eng WHERE id = '$id'");
+                 $strSQL = $db -> query("DELETE FROM article_ua WHERE id = '$id'");
+  							 header('Location: http://localhost/mysite?lang=' . $lange . '');
+              }
+						  else {
+							echo 'You do not have sufficient rights';
 						}
 					?>

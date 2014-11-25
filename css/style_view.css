@@ -36,7 +36,7 @@ border-bottom: 15px solid #45201c;
 }
 .image {
 position: relative;
-width: 100%; 
+width: 100%;
 }
 
 .image h2 {
@@ -90,16 +90,16 @@ clear:both;
  margin-right:10px;
  padding-top:10px;
  }
- .coment {
+ .comment {
  background:#dbe1b1;
  margin:5px;
  border-radius: 10px;
  padding:20px;
- width:350px;
+ width:880px;
  top:200px;
- 
  }
-.title {
+
+ .title {
 text-decoration:none;
 color:#45201c;
 }
@@ -141,7 +141,7 @@ width:180px;
 .menu menu li:hover {
 background:#e6cf4b;
 }
-  
+
 .authorization {
 background:#ffffff;
 margin:5px;
@@ -174,11 +174,10 @@ color:#607e0a;
 .rating {
 background:#d6d462;
 border-radius: 10px;
-padding:10px;
+padding:5px;
 margin:5px;
-width:920px;
+width:910px;
 }
-
  .coment h3 {
  font-size:16px;
  color:#a04507;

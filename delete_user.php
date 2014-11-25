@@ -1,6 +1,6 @@
 <?php
 						session_start();
-						 $rank = isset($_SESSION["rank"]) ? $_SESSION["rank"] : NULL;
+						 $rank = isset($_SESSION['rank']) ? $_SESSION['rank'] : NULL;
 						  include ('includes/connect.php');
 
 							if (!isset($_GET['id'])) {
@@ -9,10 +9,10 @@
 							else {
 								$id = $_GET['id'];
 							}
-							$strSQL = $db->query("DELETE FROM reg WHERE id = $id");
-							header("Location: http://localhost/mysite/user.php");
+							$strSQL = $db -> query("DELETE FROM reg WHERE id = $id");
+							header('Location: http://localhost/mysite/user.php?lang=' . $lange . '');
 						}
 						else {
-							echo 'You notlack rights';
+							echo $lang[5][1];
 						}
 					?>

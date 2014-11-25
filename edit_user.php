@@ -79,14 +79,14 @@
 				</div><br>
 				<div class = "menu">
 					<menu>
-						<li><a href = index.php><?php echo $lang[1][1]?></a></li>
 						<?php
+						echo '<li><a href = "index.php?lang=' . $lange .'">' . $lang[1][1]. '</a></li>';
 							if($rank == 1 || $rank == 2) {
-				        echo '<li><a href="new_article.php">' . $lang[2][1] . '</a></li>';
+				        echo '<li><a href="new_article.php?lang=' . $lange .'">' . $lang[2][1] . '</a></li>';
 							}
 							if($rank == 1) {
-			 					echo '<li><a href = "user.php">' . $lang[3][1] . '</a></li>';
-                echo '<li><a href = "language_editor.php">' . $lang[62][1] . '</a></li>';
+			 					echo '<li><a href = "user.php?lang=' . $lange .'">' . $lang[3][1] . '</a></li>';
+                echo '<li><a href = "language_editor.php?lang=' . $lange .'">' . $lang[62][1] . '</a></li>';
 			 				}
 			 			?>
 					</menu>

@@ -1,11 +1,11 @@
 <?php
 	session_start();
-  $check = isset($_SESSION["auth"]) ? $_SESSION["auth"] : NULL;
-  $rank = isset($_SESSION["rank"]) ? $_SESSION["rank"] : NULL;
+  $check = isset($_SESSION['auth']) ? $_SESSION['auth'] : NULL;
+  $rank  = isset($_SESSION['rank']) ? $_SESSION['rank'] : NULL;
   $login = isset($_SESSION['name']) ? $_SESSION['name'] : NULL;
 
   include ('includes/connect.php');
-  include ("language.php");
+  include ('language.php');
 ?>
 
 <!DOCTYPE html>
@@ -31,28 +31,30 @@
 				<?php
 
             if(isset($_GET['lang'])) {
+              $lange = $_GET['lang'];
               switch($_GET['lang']):
-                case 'ua':  $result = $db->query("SELECT * FROM article_ua");
+                case 'ua':  $result = $db->query("SELECT * FROM article_ua ORDER BY date DESC");
                   break;
-                case 'eng': $result = $db->query("SELECT * FROM article_eng");
+                case 'eng': $result = $db->query("SELECT * FROM article_eng ORDER BY date DESC");
                   break;
               endswitch;
             }
             else {
-            $result = $db->query("SELECT * FROM article_ua");
+            $lange = 'ua';
+            $result = $db->query("SELECT * FROM article_ua ORDER BY date DESC");
             }
 
 					if (empty($data['id'])) {
 						$data['id'] = 1;
 					}
-					$max_posts = 5;
+					$max_posts = 10;
 					$num_posts = $result->rowCount();
-					$num_pages = intval(($num_posts-1) / $max_posts)+1;
-					for($i=1 ; $i<=$num_pages; $i++)
- 					echo "<a href='/mysite/index.php?page=$i'>$i</a>";
+					$num_pages = intval(($num_posts - 1) / $max_posts) + 1;
+					for($i = 2 ; $i <= $num_pages; $i++)
+ 					echo "<a href='/mysite/index.php?page=$i&lang=" . $lange . "'>$i</a>";
 
- 					if (isset($_GET["page"])) {
- 						$page = $_GET["page"];
+ 					if (isset($_GET['page'])) {
+ 						$page = $_GET['page'];
  						if($page < 1)
  							$page = 1;
  						elseif($page > $num_pages)
@@ -61,36 +63,36 @@
  					else {
  						$page = 1;
  					}
- 					$data = $result->fetch();
+ 					$data = $result -> fetch();
 					do {
-						if (($data["id"] > ($page*$max_posts-$max_posts)) && ($data["id"] <= $page * $max_posts)) {
+						if (($data['id'] > ($page * $max_posts - $max_posts)) && ($data['id'] <= $page * $max_posts)) {
 							printf('
 							<div class="article">
 						    <img src="img/article/%s"/>
-						    <a class="title" href="view.php?id=%s"><h2>%s</h2></a>
-						    <p>%s<a href="view.php?id=%s"><h3>Read More</h3></a></p><br>
+						    <a class="title" href="view.php?id=%s&lang=' . $lange .'"><h2>%s</h2></a>
+						    <p>%s<a href="view.php?id=%s&lang=' . $lange .'"><h3>' . $lang[63][1] . '</h3></a></p><br>
 						    <b><i>%s</i></b><br>
 						    <i>%s</i>
 						    </div>
-							',$data["url"], $data["id"], $data["title"], $data["m_desk"], $data["id"], $data["login"], $data["date"]);
+							',$data['url'], $data['id'], $data['title'], $data['m_desk'], $data['id'], $data['login'], $data['date']);
 							}
 					}
-					while($data = $result->fetch());
+					while($data = $result -> fetch());
 				?>
 			</div>
 			<div class = "right">
 				<div class = "authorization">
-					<?php include ("php/authorization.php"); ?>
+					<?php include ('php/authorization.php'); ?>
 				</div><br>
 				<div class = "menu">
 					<menu>
 						<?php
 							if($rank == 1 || $rank == 2) {
-								echo '<li><a href="new_article.php">' . $lang[2][1] . '</a></li>';
+								echo '<li><a href="new_article.php?lang=' . $lange .'">' . $lang[2][1] . '</a></li>';
 							}
 							if($rank == 1) {
-			 				echo '<li><a href = "user.php">' . $lang[3][1] . '</a></li>';
-              echo '<li><a href = "language_editor.php">' . $lang[62][1] . '</a></li>';
+			 				echo '<li><a href = "user.php?lang=' . $lange .'">' . $lang[3][1] . '</a></li>';
+              echo '<li><a href = "language_editor.php?lang=' . $lange .'">' . $lang[62][1] . '</a></li>';
 			 				}
 		 				?>
 		 			</menu>

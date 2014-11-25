@@ -1,11 +1,12 @@
 <?php
   session_start();
-  $check = isset($_SESSION["auth"]) ? $_SESSION["auth"] : NULL;
-  $rank = isset($_SESSION["rank"]) ? $_SESSION["rank"] : NULL;
+  $check = isset($_SESSION['auth']) ? $_SESSION['auth'] : NULL;
+  $rank = isset($_SESSION['rank']) ? $_SESSION['rank'] : NULL;
   $login = isset($_SESSION['name']) ? $_SESSION['name'] : NULL;
 
   include ('includes/connect.php');
-  include ("language.php");
+  include ('language.php');
+  $url = $_SERVER["REQUEST_URI"];
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +39,7 @@
 
             $up_eng = $db->query("UPDATE eng SET lange = '$lang_eng' WHERE id = '$id'");
 
-            header("Location: http://localhost/mysite/language_editor.php");
+            header('Location: http://localhost/mysite/language_editor.php');
           }
               $sel_ua = $db->query("SELECT * FROM ua WHERE id = '$id'");
               $sel_eng = $db->query("SELECT * FROM eng WHERE id = '$id'");
@@ -73,13 +74,14 @@
         </div><br>
         <div class = "menu">
           <menu>
-            <li><a href = index.php><?php echo $lang[1][1]?></a></li>
             <?php
-              if($check == true) {
-                echo '<li><a href="new_article.php">' . $lang[2][1] . '</a></li>';
+              echo '<li><a href = "index.php?lang=' . $lange .'">' . $lang[1][1]. '</a></li>';
+
+              if($rank == 1 || $rank == 2) {
+                echo '<li><a href="new_article.php?lang=' . $lange .'">' . $lang[2][1] . '</a></li>';
               }
               if($rank == 1) {
-                echo '<li><a href = "user.php">' . $lang[3][1] . '</a></li>';
+                echo '<li><a href = "user.php?lang=' . $lange .'">' . $lang[3][1] . '</a></li>';
               }
             ?>
           </menu>

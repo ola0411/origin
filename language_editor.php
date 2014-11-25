@@ -5,7 +5,7 @@
   $login = isset($_SESSION['name']) ? $_SESSION['name'] : NULL;
 
   include ('includes/connect.php');
-  include ("language.php");
+  include ('language.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,15 +29,15 @@
       <div class="left">
         <div class="user">
           <?php
-              $lang_ua = $db->query("SELECT * FROM ua");
-              $lang_eng = $db->query("SELECT * FROM eng");
-              $row_ua = $lang_ua->fetch();
-              $row_eng = $lang_eng->fetch();
+              $lang_ua  = $db -> query("SELECT * FROM ua");
+              $lang_eng = $db -> query("SELECT * FROM eng");
+              $row_ua   = $lang_ua -> fetch();
+              $row_eng  = $lang_eng -> fetch();
           do {
                   printf('
                   <table>
                   <tr>
-                  <td><b>%s</b></td><td><a href="edit_lange.php?id=%s">[' . $lang[33][1] . ']</a></td>
+                  <td><b>%s</b></td><td><a href="edit_lange.php?id=%s&lang=' . $lange .'">[' . $lang[33][1] . ']</a></td>
                   </tr>
                   </table>
                   ',$row_ua['lange'], $row_ua['id']);
@@ -49,18 +49,18 @@
       </div>
       <div class = "right">
         <div class = "authorization">
-          <?php include ("php/authorization.php"); ?>
+          <?php include ('php/authorization.php'); ?>
         </div><br>
         <div class = "menu">
           <menu>
-             <li><a href = index.php><?php echo $lang[1][1]?></a></li>
-            <?php
+             <?php
+             echo '<li><a href = "index.php?lang=' . $lange .'">' . $lang[1][1]. '</a></li>';
               if($rank == 1 || $rank == 2) {
-                echo '<li><a href="new_article.php">' . $lang[2][1] . '</a></li>';
+                echo '<li><a href="new_article.php?lang=' . $lange .'">' . $lang[2][1] . '</a></li>';
               }
               if($rank == 1) {
-              echo '<li><a href = "user.php">' . $lang[3][1] . '</a></li>';
-              echo '<li><a href = "language_editor.php">' . $lang[62][1] . '</a></li>';
+              echo '<li><a href = "user.php?lang=' . $lange .'">' . $lang[3][1] . '</a></li>';
+              echo '<li><a href = "language_editor.php?lang=' . $lange .'">' . $lang[62][1] . '</a></li>';
               }
             ?>
           </menu>

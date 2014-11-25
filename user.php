@@ -1,17 +1,10 @@
 <?php
 	session_start();
-	@$login=$_SESSION["name"];
-	@$check = $_SESSION["auth"];
-	@$rank = $_SESSION["rank"];
-	error_reporting(E_ALL);
-	try {
-		$db = new PDO('mysql:host=localhost;dbname=ololo; charset=utf8','root','123');
-		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	}
-	catch(PDOException $e) {
-	    die("Error: ".$e->getMessage());
-	}
-	include ("language.php");
+	 $check = isset($_SESSION['auth']) ? $_SESSION['auth'] : NULL;
+   $rank  = isset($_SESSION['rank']) ? $_SESSION['rank'] : NULL;
+   $login = isset($_SESSION['name']) ? $_SESSION['name'] : NULL;
+	include ('includes/connect.php');
+  include ('language.php');
 ?>
 
 <!DOCTYPE html>
@@ -37,19 +30,19 @@
 				<div class = "user">
 					<?php
 							if($rank == 1) {
-							$result = $db->query("select * from reg");
-							$data = $result->fetch();
+							$result = $db -> query("select * from reg");
+							$data = $result -> fetch();
 
 								do {
 									printf('
 									<div>
 									<ul>
-									<li><b>' . $lang[13][1] . '</b>%s<b>' . $lang[14][1] . '</b>%s  <a href="edit_user.php?id=%s">[' . $lang[33][1] . ']</a> <a href="php/dell_user.php?id=%s"> [' . $lang[32][1] . ']</a>
+									<li><b>' . $lang[13][1] . '</b>%s<b>' . $lang[14][1] . '</b>%s  <a href="edit_user.php?id=%s&lang=' . $lange .'">[' . $lang[33][1] . ']</a> <a href="php/dell_user.php?id=%s"> [' . $lang[32][1] . ']</a>
 									</ul><br>
 									</div>
 									',$data['login'], $data['email'], $data['id'], $data['id']);
 								}
-								while ($data = $result->fetch());
+								while ($data = $result -> fetch());
 						}
 						else {
 								echo $lang[5][1];
@@ -59,18 +52,18 @@
 			</div>
 			<div class = "right">
 				<div class = "authorization">
-					<?php include ("php/authorization.php"); ?>
+					<?php include ('php/authorization.php'); ?>
 				</div><br>
 				<div class = "menu">
 					<menu>
-						<li><a href = index.php><?php echo $lang[1][1]?></a></li>
-						<?php
-							if($rank == 1 || $rank == 2) {
-								echo '<li><a href="new_article.php">' . $lang[2][1] . '</a></li>';
+            <?php
+						  echo '<li><a href = "index.php?lang=' . $lange .'">' . $lang[1][1]. '</a></li>';
+						  if($rank == 1 || $rank == 2) {
+								echo '<li><a href="new_article.php?lang=' . $lange .'">' . $lang[2][1] . '</a></li>';
 							}
               if($rank == 1) {
-                echo '<li><a href="user.php">' . $lang[3][1] . '</a></li>';
-                echo '<li><a href = "language_editor.php">' . $lang[62][1] . '</a></li>';
+                echo '<li><a href="user.php?lang=' . $lange .'">' . $lang[3][1] . '</a></li>';
+                echo '<li><a href = "language_editor.php?lang=' . $lange .'">' . $lang[62][1] . '</a></li>';
               }
 						?>
 					</menu>

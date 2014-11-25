@@ -1,13 +1,6 @@
 <?php
-try {
-    $db = new PDO('mysql:host=localhost;dbname=ololo; charset=utf8','root','123');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
-  catch(PDOException $e) {
-    die("Error: ".$e->getMessage());
-  }
-  include ("language.php");
-  ?>
+include ('includes/connect.php');
+?>
 
 <!DOCTYPE html>
 <html>
@@ -36,9 +29,9 @@ try {
             $password   = $_POST['password'];
             $r_password = $_POST['r_password'];
             $email      = $_POST['email'];
-            $date       = date("Y-m-d H:i:s");
-            $img    = 'img/avatar/profile.jpg';
-            $rank     = 3;
+            $date       = date('Y-m-d H:i:s');
+            $img        = 'img/avatar/profile.jpg';
+            $rank       = 3;
 
               $log = $db->query("SELECT * FROM reg WHERE login = '$login'");
               $em  = $db->query("SELECT * FROM reg WHERE email = '$email'");
@@ -84,7 +77,7 @@ try {
       <div class = "right">
         <div class = "menu">
           <menu>
-            <br><li><a href = index.php><?php echo $lang[1][1]?></a></li>
+           <?php echo '<li><a href = index.php?lang=' . $lange .'>' . $lang[1][1]. '</a></li>'; ?>
           </menu>
         </div>
       </div>

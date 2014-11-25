@@ -1,17 +1,10 @@
 <?php
 	session_start();
-	error_reporting(E_ALL);
-	@$login = $_SESSION['name'];
-	@$check = $_SESSION["auth"];
-	@$rank = $_SESSION["rank"];
-	try {
-		$db = new PDO('mysql:host=localhost;dbname=ololo; charset=utf8','root','123');
-		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	}
-	catch(PDOException $e) {
-		die("Error: ".$e->getMessage());
-	}
-		include ("language.php");
+    $check = isset($_SESSION['auth']) ? $_SESSION['auth'] : NULL;
+    $rank  = isset($_SESSION['rank']) ? $_SESSION['rank'] : NULL;
+    $login = isset($_SESSION['name']) ? $_SESSION['name'] : NULL;
+	include ('includes/connect.php');
+  include ('language.php');
 
 ?>
 
@@ -37,10 +30,10 @@
 			<div class = "left">
 				<div class = "avatar">
 					<?php
-						echo '<a href = "profile.php">' . $lang[55][1] . '</a><br>';
+						echo '<a href = "profile.php?lang=' . $lange .'">' . $lang[55][1] . '</a><br>';
 						echo '<a href = "php/dell_prof.php">' . $lang[56][1] . '</a><br>';
-						$result = $db->query("SELECT * FROM reg WHERE login ='$login'");
-						$data = $result->fetch();
+						$result = $db -> query("SELECT * FROM reg WHERE login ='$login'");
+						$data = $result -> fetch();
 							do {
 
 								printf('
@@ -57,26 +50,25 @@
 								</div>
 								',$data['img'], $data['login'], $data['email'], $data['name'], $data['last_name'], $data['date'], $data['date_av']);
 							}
-							while	($data = $result->fetch());
-
+							while	($data = $result -> fetch());
 					?>
 
 				</div>
 			</div>
 			<div class ="right">
 				<div class = "authorization">
-					<?php include ("php/authorization.php"); ?>
+					<?php include ('php/authorization.php'); ?>
 				</div><br>
 				<div class = "menu">
 					<menu>
-						<li><a href = index.php><?php echo $lang[1][1]; ?></a></li>
 							<?php
+                echo '<li><a href = "index.php?lang=' . $lange .'">' . $lang[1][1]. '</a></li>';
 								if($rank == 1 || $rank == 2) {
-										echo '<li><a href="new_article.php">' . $lang[2][1] . '</a></li>';
+										echo '<li><a href="new_article.php?lang=' . $lange .'">' . $lang[2][1] . '</a></li>';
 								}
 								if($rank == 1) {
-			 						echo '<li><a href="user.php">' . $lang[3][1] . '</a></li>';
-                  echo '<li><a href = "language_editor.php">' . $lang[62][1] . '</a></li>';
+			 						echo '<li><a href="user.php?lang=' . $lange .'">' . $lang[3][1] . '</a></li>';
+                  echo '<li><a href = "language_editor.php?lang=' . $lange .'">' . $lang[62][1] . '</a></li>';
 			 					}
 			 				?>
 					</menu>
