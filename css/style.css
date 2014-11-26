@@ -19,6 +19,7 @@ font-weight: bold;
 .wrapper {
 background:#e9f0bc;
 width:1200px;
+min-height: 880px;
 margin: 0 auto;
 clear:both;
 }
@@ -74,7 +75,6 @@ border-radius: 10px;
 clear:both;
 width:930px;
 padding: 15px;
-margin-bottom:10px;
 }
 .register h3{
 font-size:18px;

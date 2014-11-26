@@ -18,15 +18,15 @@
 	<body>
 		<div class = "wrapper">
 			<div class = "header">
+        <div class = "lang">
+          <a href = "?lang=ua"><img src = "img/ua.jpg"></a>
+          <a href = "?lang=eng"><img src = "img/eng.jpg"></a>
+        </div>
 				<div class = "image">
-					<div class = "lang">
-						<a href = "?lang=ua"><img src = "img/ua.jpg"></a>
-						<a href = "?lang=eng"><img src = "img/eng.jpg"></a>
-					</div>
-							<img src = "img/baner.jpg"/>
+					<img src = "img/baner.jpg"/>
 						<h2><span><?php echo $lang[0][1]?></span></h2>
 				</div>
-			</div>
+       </div>
 			<div class="left">
 				<?php
 
@@ -47,10 +47,10 @@
 					if (empty($data['id'])) {
 						$data['id'] = 1;
 					}
-					$max_posts = 10;
+					$max_posts = 3;
 					$num_posts = $result->rowCount();
 					$num_pages = intval(($num_posts - 1) / $max_posts) + 1;
-					for($i = 2 ; $i <= $num_pages; $i++)
+					for($i = 1 ; $i <= $num_pages; $i++)
  					echo "<a href='/mysite/index.php?page=$i&lang=" . $lange . "'>$i</a>";
 
  					if (isset($_GET['page'])) {

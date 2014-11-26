@@ -37,7 +37,7 @@
 							else {
 								$id = $_GET['id'];
                 $_SESSION['id_art'] = $_GET['id'];
-                $id_art = isset($_SESSION['id_id_art']) ? $_SESSION['id_art'] : NULL;
+                $id_art = isset($_SESSION['id_art']) ? $_SESSION['id_art'] : NULL;
               }
               if(isset($_GET['lang'])) {
                  $lange = $_GET['lang'];
@@ -57,10 +57,10 @@
 							if (!empty($data)) {
                 do {
 									printf('
-									<div>
+									<div  class = "view_article">
                  <img src = "img/article/%s">
 									<h1>%s</h1>
-									</div>
+
 									',$data['url'], $data['title']);
                     include('php/golos.php');
                   printf('
@@ -69,6 +69,7 @@
                   <p>%s</p>
                   <b><i>%s</i></b><br>
                     <i>%s</i>
+                  </div>
                   ', $data['id'], $data['desk'], $data['login'], $data['date']);
 								}
 								while	($data = $result -> fetch());

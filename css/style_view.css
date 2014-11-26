@@ -19,6 +19,7 @@ font-weight: bold;
 .wrapper {
 background:#e9f0bc;
 width:1200px;
+min-height: 600px;
 margin: 0 auto;
 clear:both;
 }
@@ -74,13 +75,16 @@ height:225px;
 
 .article {
 width:930px;
+min-height: 580px;
 padding: 10px;
 background:#ffffff;
 margin-bottom:15px;
 clear:both;
-
-
 }
+.view_article {
+min-height: 230px;
+}
+
 .article img {
  float:left;
  margin-right:20px;
